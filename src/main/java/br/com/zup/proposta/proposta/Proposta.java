@@ -40,4 +40,6 @@ public class Proposta {
     public Integer getId() {
         return id;
     }
+
+
 }

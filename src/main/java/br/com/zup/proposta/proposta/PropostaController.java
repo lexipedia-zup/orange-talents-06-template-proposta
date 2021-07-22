@@ -20,6 +20,9 @@ public class PropostaController {
 
     @PostMapping
     public ResponseEntity<?> insert(@Valid @RequestBody PropostaRequest request, UriComponentsBuilder uriComponentsBuilder){
+        if(propostaRepository.existsByDocumento(request.getDocumento())){
+            return ResponseEntity.unprocessableEntity().build();
+        }
         Proposta novaProposta = request.toModel();
         propostaRepository.save(novaProposta);
         URI enderecoRecurso = uriComponentsBuilder.path("/proposta/{id}").build(novaProposta.getId());

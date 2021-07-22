@@ -2,10 +2,7 @@ package br.com.zup.proposta.proposta;
 
 import br.com.zup.proposta.validacao.CpfOrCnpj;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -21,6 +18,8 @@ public class Proposta {
     private String nome;
     private String endereco;
     private Integer salario;
+    @Enumerated(EnumType.STRING)
+    private SituacaoProposta situacaoProposta;
 
     public Proposta() {
     }
@@ -41,5 +40,15 @@ public class Proposta {
         return id;
     }
 
+    public String getDocumento() {
+        return documento;
+    }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public void setSituacaoProposta(SituacaoProposta situacaoProposta) {
+        this.situacaoProposta = situacaoProposta;
+    }
 }

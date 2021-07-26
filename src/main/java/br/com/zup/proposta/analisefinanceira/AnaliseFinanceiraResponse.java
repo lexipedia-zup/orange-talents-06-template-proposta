@@ -34,4 +34,13 @@ public class AnaliseFinanceiraResponse {
         return this.resultadoSolicitacao == ResultadoAnaliseFinanceira.SEM_RESTRICAO;
     }
 
+    @Override
+    public String toString() {
+        return "AnaliseFinanceiraResponse{" +
+                "idProposta='" + idProposta + '\'' +
+                ", documento='" + documento + '\'' +
+                ", nome='" + nome + '\'' +
+                ", resultadoSolicitacao=" + resultadoSolicitacao +
+                '}';
+    }
 }

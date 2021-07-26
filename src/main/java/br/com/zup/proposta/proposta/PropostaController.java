@@ -35,9 +35,15 @@ public class PropostaController {
         try {
             AnaliseFinanceiraRequest analiseFinanceiraRequest = new AnaliseFinanceiraRequest(novaProposta.getId().toString(), novaProposta.getDocumento(), novaProposta.getNome());
             AnaliseFinanceiraResponse analiseFinanceiraResponse = analiseFinanceiraClient.avaliarProposta(analiseFinanceiraRequest);
-            if(analiseFinanceiraResponse.clienteElegivel()) novaProposta.setSituacaoProposta(SituacaoProposta.ELEGIVEL);
+            System.out.println(analiseFinanceiraResponse.toString());
+            if (analiseFinanceiraResponse.clienteElegivel()) {
+                System.out.println("ENTRANDO NO IF");
+                novaProposta.setSituacaoProposta(SituacaoProposta.ELEGIVEL);
+                System.out.println("SAINDO DO IF");
+            }
 
         } catch (FeignException e) {
+            e.printStackTrace();
             novaProposta.setSituacaoProposta(SituacaoProposta.NAO_ELEGIVEL);
         }
 
@@ -48,9 +54,9 @@ public class PropostaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable Integer id){
+    public ResponseEntity<?> findById(@PathVariable Integer id) {
         Optional<Proposta> proposta = propostaRepository.findById(id);
-        if(proposta.isEmpty()) return ResponseEntity.notFound().build();
+        if (proposta.isEmpty()) return ResponseEntity.notFound().build();
 
         return ResponseEntity.ok().body(proposta.get());
     }

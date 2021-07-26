@@ -3,7 +3,6 @@ package br.com.zup.proposta.proposta;
 import br.com.zup.proposta.analisefinanceira.AnaliseFinanceiraClient;
 import br.com.zup.proposta.analisefinanceira.AnaliseFinanceiraRequest;
 import br.com.zup.proposta.analisefinanceira.AnaliseFinanceiraResponse;
-import br.com.zup.proposta.analisefinanceira.ResultadoAnaliseFinanceira;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +38,7 @@ public class PropostaController {
             AnaliseFinanceiraRequest analiseFinanceiraRequest = new AnaliseFinanceiraRequest(novaProposta.getId().toString(), novaProposta.getDocumento(), novaProposta.getNome());
             AnaliseFinanceiraResponse analiseFinanceiraResponse = analiseFinanceiraClient.avaliarProposta(analiseFinanceiraRequest);
             novaProposta.setSituacaoProposta(SituacaoProposta.ELEGIVEL);
+
         } catch (FeignException e) {
             novaProposta.setSituacaoProposta(SituacaoProposta.NAO_ELEGIVEL);
         }
@@ -48,4 +48,6 @@ public class PropostaController {
         URI enderecoRecurso = uriComponentsBuilder.path("/proposta/{id}").build(novaProposta.getId());
         return ResponseEntity.created(enderecoRecurso).build();
     }
+
+
 }

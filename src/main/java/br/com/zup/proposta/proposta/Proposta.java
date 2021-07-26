@@ -1,5 +1,6 @@
 package br.com.zup.proposta.proposta;
 
+import br.com.zup.proposta.cartao.Cartao;
 import br.com.zup.proposta.validacao.CpfOrCnpj;
 
 import javax.persistence.*;
@@ -20,6 +21,8 @@ public class Proposta {
     private Integer salario;
     @Enumerated(EnumType.STRING)
     private SituacaoProposta situacaoProposta;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Cartao cartao;
 
     public Proposta() {
     }
@@ -50,5 +53,9 @@ public class Proposta {
 
     public void setSituacaoProposta(SituacaoProposta situacaoProposta) {
         this.situacaoProposta = situacaoProposta;
+    }
+
+    public void setCartao(Cartao cartao) {
+        this.cartao = cartao;
     }
 }

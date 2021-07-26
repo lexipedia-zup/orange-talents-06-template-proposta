@@ -1,12 +1,12 @@
-package br.com.zup.proposta.analisefinanceira;
+package br.com.zup.proposta.cartao;
 
-public class AnaliseFinanceiraRequest {
+public class CriacaoCartaoRequest {
 
     private String idProposta;
     private String documento;
     private String nome;
 
-    public AnaliseFinanceiraRequest(String idProposta, String documento, String nome) {
+    public CriacaoCartaoRequest(String idProposta, String documento, String nome) {
         this.idProposta = idProposta;
         this.documento = documento;
         this.nome = nome;
@@ -25,4 +25,3 @@ public class AnaliseFinanceiraRequest {
     }
 
 }
-

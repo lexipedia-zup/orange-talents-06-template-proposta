@@ -6,14 +6,12 @@ import br.com.zup.proposta.analisefinanceira.AnaliseFinanceiraResponse;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/proposta")
@@ -37,7 +35,7 @@ public class PropostaController {
         try {
             AnaliseFinanceiraRequest analiseFinanceiraRequest = new AnaliseFinanceiraRequest(novaProposta.getId().toString(), novaProposta.getDocumento(), novaProposta.getNome());
             AnaliseFinanceiraResponse analiseFinanceiraResponse = analiseFinanceiraClient.avaliarProposta(analiseFinanceiraRequest);
-            novaProposta.setSituacaoProposta(SituacaoProposta.ELEGIVEL);
+            if(analiseFinanceiraResponse.clienteElegivel()) novaProposta.setSituacaoProposta(SituacaoProposta.ELEGIVEL);
 
         } catch (FeignException e) {
             novaProposta.setSituacaoProposta(SituacaoProposta.NAO_ELEGIVEL);
@@ -49,5 +47,11 @@ public class PropostaController {
         return ResponseEntity.created(enderecoRecurso).build();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable Integer id){
+        Optional<Proposta> proposta = propostaRepository.findById(id);
+        if(proposta.isEmpty()) return ResponseEntity.notFound().build();
 
+        return ResponseEntity.ok().body(proposta.get());
+    }
 }

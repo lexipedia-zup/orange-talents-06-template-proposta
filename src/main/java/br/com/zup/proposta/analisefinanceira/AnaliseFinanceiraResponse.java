@@ -30,4 +30,8 @@ public class AnaliseFinanceiraResponse {
         return resultadoSolicitacao;
     }
 
+    public boolean clienteElegivel(){
+        return this.resultadoSolicitacao == ResultadoAnaliseFinanceira.SEM_RESTRICAO;
+    }
+
 }

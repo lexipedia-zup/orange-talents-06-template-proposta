@@ -51,6 +51,14 @@ public class Proposta {
         return nome;
     }
 
+    public SituacaoProposta getSituacaoProposta() {
+        return situacaoProposta;
+    }
+
+    public Cartao getCartao() {
+        return cartao;
+    }
+
     public void setSituacaoProposta(SituacaoProposta situacaoProposta) {
         this.situacaoProposta = situacaoProposta;
     }

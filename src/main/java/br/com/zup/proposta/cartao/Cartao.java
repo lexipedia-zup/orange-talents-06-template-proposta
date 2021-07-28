@@ -108,8 +108,4 @@ public class Cartao {
     public void adicionaBloqueio(Bloqueio bloqueio) {
         this.bloqueios.add(bloqueio);
     }
-
-    public boolean bloqueado(){
-        return !this.bloqueios.isEmpty();
-    }
 }

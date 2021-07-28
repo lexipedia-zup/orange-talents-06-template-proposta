@@ -39,13 +39,13 @@ public class BloqueioController {
             return ResponseEntity.notFound().build();
         }
 
-        if(cartao.get().bloqueado()){
+        boolean cartaoBloqueado = !bloqueioRepository.findByCartaoAndAtivoIsTrue(cartao.get()).isEmpty();
+        if(cartaoBloqueado){
             return ResponseEntity.unprocessableEntity().build();
         }
 
         try{
-            BloqueioResponse bloqueioResponse = cartaoClient.bloquearCartao(cartao.get().getId(),
-                    Map.of("sistemaResponsavel", "proposta-api-alex"));
+            BloqueioResponse bloqueioResponse = cartaoClient.bloquearCartao(cartao.get().getId(), Map.of("sistemaResponsavel", "proposta-api-alex"));
             if(bloqueioResponse.getResultado() == ResultadoBloqueio.BLOQUEADO){
                 Bloqueio bloqueio = new Bloqueio(cartao.get(), httpServletRequest.getRemoteAddr(), httpServletRequest.getHeader("user-agent"));
                 cartao.get().adicionaBloqueio(bloqueio);

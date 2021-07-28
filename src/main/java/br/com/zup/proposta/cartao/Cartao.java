@@ -1,5 +1,7 @@
 package br.com.zup.proposta.cartao;
 
+import br.com.zup.proposta.cartao.bloqueio.Bloqueio;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -101,5 +103,13 @@ public class Cartao {
 
     public Integer getIdProposta() {
         return idProposta;
+    }
+
+    public void adicionaBloqueio(Bloqueio bloqueio) {
+        this.bloqueios.add(bloqueio);
+    }
+
+    public boolean bloqueado(){
+        return !this.bloqueios.isEmpty();
     }
 }

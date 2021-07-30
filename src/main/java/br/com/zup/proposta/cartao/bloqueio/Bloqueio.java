@@ -15,7 +15,7 @@ public class Bloqueio {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    @OneToOne
+    @ManyToOne
     private Cartao cartao;
     @CreationTimestamp
     private LocalDateTime instanteDoBloqueio = LocalDateTime.now();

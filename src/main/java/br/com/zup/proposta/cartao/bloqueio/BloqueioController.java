@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.Map;
 import java.util.Optional;
@@ -32,29 +31,23 @@ public class BloqueioController {
     private CartaoClient cartaoClient;
 
     @PostMapping("/{idCartao}")
-    public ResponseEntity<?> insert(@PathVariable("idCartao") @NotNull Integer idCartao, HttpServletRequest httpServletRequest){
-
+    public ResponseEntity<?> insert(@PathVariable("idCartao") @NotNull Integer idCartao, HttpServletRequest httpServletRequest) {
         Optional<Cartao> cartao = cartaoRepository.findById(idCartao);
-        if(cartao.isEmpty()){
+        if (cartao.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-
         boolean cartaoBloqueado = !bloqueioRepository.findByCartaoAndAtivoIsTrue(cartao.get()).isEmpty();
-        if(cartaoBloqueado){
+        if (cartaoBloqueado) {
             return ResponseEntity.unprocessableEntity().build();
         }
-
-        try{
-            BloqueioResponse bloqueioResponse = cartaoClient.bloquearCartao(cartao.get().getId(), Map.of("sistemaResponsavel", "proposta-api-alex"));
-            if(bloqueioResponse.getResultado() == ResultadoBloqueio.BLOQUEADO){
-                Bloqueio bloqueio = new Bloqueio(cartao.get(), httpServletRequest.getRemoteAddr(), httpServletRequest.getHeader("user-agent"));
-                cartao.get().adicionaBloqueio(bloqueio);
-                bloqueioRepository.save(bloqueio);
-                return ResponseEntity.ok().build();
-            }
-        }catch (FeignException e) {
+        BloqueioResponse bloqueioResponse = cartaoClient.bloquearCartao(cartao.get().getId(), Map.of("sistemaResponsavel", "proposta-api-alex"));
+        if (bloqueioResponse.getResultado() == ResultadoBloqueio.FALHA) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+        Bloqueio bloqueio = new Bloqueio(cartao.get(), httpServletRequest.getRemoteAddr(), httpServletRequest.getHeader("user-agent"));
+        cartao.get().adicionaBloqueio(bloqueio);
+        bloqueioRepository.save(bloqueio);
         return ResponseEntity.ok().build();
+
     }
 }

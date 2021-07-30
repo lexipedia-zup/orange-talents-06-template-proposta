@@ -1,5 +1,6 @@
 package br.com.zup.proposta.cartao;
 
+import br.com.zup.proposta.cartao.aviso.Aviso;
 import br.com.zup.proposta.cartao.bloqueio.Bloqueio;
 
 import javax.persistence.*;
@@ -107,5 +108,9 @@ public class Cartao {
 
     public void adicionaBloqueio(Bloqueio bloqueio) {
         this.bloqueios.add(bloqueio);
+    }
+
+    public void adicionarAviso(Aviso aviso){
+        this.avisos.add(aviso);
     }
 }

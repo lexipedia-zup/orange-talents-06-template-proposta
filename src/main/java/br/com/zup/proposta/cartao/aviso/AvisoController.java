@@ -3,7 +3,6 @@ package br.com.zup.proposta.cartao.aviso;
 import br.com.zup.proposta.cartao.Cartao;
 import br.com.zup.proposta.cartao.CartaoClient;
 import br.com.zup.proposta.cartao.CartaoRepository;
-import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,9 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController

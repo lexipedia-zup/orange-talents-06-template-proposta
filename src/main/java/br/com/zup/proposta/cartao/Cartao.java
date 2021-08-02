@@ -2,6 +2,7 @@ package br.com.zup.proposta.cartao;
 
 import br.com.zup.proposta.cartao.aviso.Aviso;
 import br.com.zup.proposta.cartao.bloqueio.Bloqueio;
+import br.com.zup.proposta.cartao.carteira.Carteira;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -112,5 +113,9 @@ public class Cartao {
 
     public void adicionarAviso(Aviso aviso){
         this.avisos.add(aviso);
+    }
+
+    public void adicionaCarteira(Carteira carteira) {
+        this.carteiras.add(carteira);
     }
 }

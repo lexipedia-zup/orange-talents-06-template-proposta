@@ -4,9 +4,6 @@ import br.com.zup.proposta.cartao.Cartao;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 
 @Entity
@@ -35,10 +32,6 @@ public class Bloqueio {
 
     public Integer getId() {
         return id;
-    }
-
-    public Cartao getCartao() {
-        return cartao;
     }
 
     public LocalDateTime getInstanteDoBloqueio() {

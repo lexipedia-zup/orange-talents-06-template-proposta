@@ -1,6 +1,7 @@
 package br.com.zup.proposta.proposta;
 
 import br.com.zup.proposta.validacao.CpfOrCnpj;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -36,7 +37,9 @@ public class PropostaRequest {
     }
 
     public Proposta toModel(){
-        return new Proposta(this.documento,
+        BCryptPasswordEncoder encriptador = new BCryptPasswordEncoder();
+        String documentoEncriptado = encriptador.encode(this.documento);
+        return new Proposta(documentoEncriptado,
                 this.email,
                 this.nome,
                 this.endereco,

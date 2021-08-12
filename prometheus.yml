@@ -1,0 +1,44 @@
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+rule_files:
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['127.0.0.1:9090']
+
+  - job_name: 'spring-actuator'
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['proposta-api:8080']
+    oauth2:
+      client_id: prometheus
+      client_secret: '4f4511ec-caf9-44f9-9bd2-c085eef20f83'
+      scopes:
+        - prometheus
+      token_url: http://keycloak:8080/auth/realms/nosso-cartao/protocol/openid-connect/token
+      endpoint_params:
+        username: prometheus
+        password: 123456
+        grant_type: password
+
+  - job_name: 'contas'
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['contas:8888']
+
+  - job_name: 'analise'
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['analise:9999']
+
+  - job_name: 'transacoes'
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['transacoes:7777']
+

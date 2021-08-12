@@ -6,6 +6,7 @@ import br.com.zup.proposta.analisefinanceira.AnaliseFinanceiraResponse;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -25,9 +26,9 @@ public class PropostaController {
 
     @PostMapping
     public ResponseEntity<?> insert(@Valid @RequestBody PropostaRequest request, UriComponentsBuilder uriComponentsBuilder) {
-        if (propostaRepository.existsByDocumento(request.getDocumento())) {
-            return ResponseEntity.unprocessableEntity().build();
-        }
+
+
+
         Proposta novaProposta = request.toModel();
 
         propostaRepository.save(novaProposta);

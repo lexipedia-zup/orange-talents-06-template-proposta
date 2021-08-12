@@ -6,7 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -27,6 +29,12 @@ public class ExceptionsController extends ResponseEntityExceptionHandler {
 
         ErrorObject errorObject = new ErrorObject(LocalDateTime.now(), descricaoErros, descricaoErrosObject);
         return new ResponseEntity<>(errorObject, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = HttpClientErrorException.UnprocessableEntity.class)
+    protected ResponseEntity<Object> handleUnprocessableEntity(HttpClientErrorException.UnprocessableEntity ex){
+
+        return new ResponseEntity<>(new HttpHeaders(), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
 }

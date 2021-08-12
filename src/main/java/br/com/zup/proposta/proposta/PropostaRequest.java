@@ -1,6 +1,7 @@
 package br.com.zup.proposta.proposta;
 
 import br.com.zup.proposta.validacao.CpfOrCnpj;
+import br.com.zup.proposta.validacao.Unique;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.validation.constraints.Email;
@@ -13,6 +14,7 @@ public class PropostaRequest {
 
     @CpfOrCnpj
     @NotBlank
+    @Unique(fieldName = "documento", domainClass = Proposta.class)
     private String documento;
     @Email
     @NotBlank

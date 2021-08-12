@@ -2,6 +2,7 @@ package br.com.zup.proposta.proposta;
 
 import br.com.zup.proposta.cartao.Cartao;
 import br.com.zup.proposta.validacao.CpfOrCnpj;
+import br.com.zup.proposta.validacao.Unique;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
